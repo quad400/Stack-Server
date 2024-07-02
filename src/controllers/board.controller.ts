@@ -54,6 +54,7 @@ export class BoardController {
     const { boardId } = req.params;
 
     const { workspaceId } = req.query;
+
     const board = await this.boardDao.update(
       boardId,
       workspaceId,
@@ -70,9 +71,8 @@ export class BoardController {
   };
 
   delete = async (req: Request, res: Response) => {
-    const body = req.body;
 
-    const { workspaceId } = req.params;
+    const { workspaceId } = req.query;
     const { _id: userId } = req.user;
     const { boardId } = req.params;
 

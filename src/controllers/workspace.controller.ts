@@ -24,6 +24,18 @@ export class WorkspaceController {
     });
   };
 
+  get = async (req: Request, res: Response) => {
+    const { workspaceId } = req.params;
+
+    const workspace = await this.workspaceDao.get(workspaceId);
+    ResponseHelper.successResponse({
+      res: res,
+      data: workspace,
+      statusCode: HTTP_STATUS_OK,
+    });
+  }
+
+
   list = async (req: Request, res: Response) => {
     const userId = req.user;
 
@@ -36,7 +48,7 @@ export class WorkspaceController {
   };
 
   update = async (req: Request, res: Response) => {
-    const userId = req.user;
+    const userId = req.user?._id;
     const body = req.body;
     const { workspaceId } = req.params;
 
@@ -48,16 +60,15 @@ export class WorkspaceController {
     });
   };
 
-  delete = async (req: Request, res: Response)=> {
-    const userId = req.user
-    const {workspaceId} = req.params
+  delete = async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    const { workspaceId } = req.params;
 
-    await this.workspaceDao.delete(userId, workspaceId)
+    await this.workspaceDao.delete(userId, workspaceId);
     ResponseHelper.successResponse({
       res: res,
       message: "Successfully deleted workspace",
-      statusCode: HTTP_STATUS_OK
-    })
- 
-  }
+      statusCode: HTTP_STATUS_OK,
+    });
+  };
 }

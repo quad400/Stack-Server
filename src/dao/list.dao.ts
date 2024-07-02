@@ -13,7 +13,7 @@ export class ListDao {
     boardId: any,
     workspaceId: any
   ) {
-    await this.permission.isOwnerPermission(Workspace, workspaceId, userId);
+    await this.permission.hasPermission(workspaceId, userId);
 
     const list = await List.create({ boardId: boardId, ...body });
 
@@ -23,18 +23,13 @@ export class ListDao {
   }
 
   async get(listId: string) {
-    const list = await this.dao.getById(List, listId);
+    const list = await List.findById(listId).populate("cards");
 
     return list;
   }
 
-  async list(boardId: any, query: any) {
-    const lists = await this.dao.getAll({
-      model: List,
-      query: query,
-      paginated: false,
-      optionalQuery: { boardId: boardId },
-    });
+  async list(boardId: any) {
+    const lists = await List.find({ boardId: boardId }).populate("cards")
 
     return lists;
   }
@@ -45,7 +40,7 @@ export class ListDao {
     body: Record<string, any>,
     userId: string
   ) {
-    await this.permission.isOwnerPermission(Workspace, workspaceId, userId);
+    await this.permission.hasPermission(workspaceId, userId);
 
     const list = await this.dao.update(List, listId, body);
 
@@ -53,7 +48,7 @@ export class ListDao {
   }
 
   async delete(boardId: any, listId: string, workspaceId: any, userId: string) {
-    await this.permission.isOwnerPermission(Workspace, workspaceId, userId);
+    await this.permission.hasPermission(workspaceId, userId);
 
     await this.dao.update(Board, boardId, {
       $pull: { lists: listId },

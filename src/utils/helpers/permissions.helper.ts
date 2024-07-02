@@ -5,24 +5,42 @@ import {
   ExceptionCodes,
 } from "../exceptions/database.exception";
 import { IWorkspace } from "../../interfaces/workspace.interface";
+import { Member } from "../../models/member.model";
+import { IMember } from "../../interfaces/member.interface";
 
 export class Permission {
   private daoHelper = new DaoHelper();
 
-  async isOwnerPermission<T>(
-    model: Model<IWorkspace>,
-    modelId: string,
-    ownerId: string
-  ) {
-    const _model = await this.daoHelper.getByData(model, { _id: modelId });
+  async hasPermission<T>(modelId: string, ownerId: string) {
+    const member = (await Member.findOne({
+      workspaceId: modelId,
+      user: ownerId,
+    })) as boolean;
 
-    console.log(_model?.createdBy.toString(), ownerId.toString())
-    const isOwner = _model?.createdBy.toString() === ownerId.toString();
-    if (!isOwner) {
+    if (!member) {
       throw new DatabaseException(
         ExceptionCodes.PERMISSION_DENIED,
         "Permission denied"
       );
     }
+
+    return true
+  }
+
+  async IsAdmin(modelId: string, userId: string) {
+    const member = (await Member.findOne({
+      workspaceId: modelId,
+      user: userId,
+      role: "admin",
+    })) as boolean;
+
+    if (!member) {
+      throw new DatabaseException(
+        ExceptionCodes.PERMISSION_DENIED,
+        "Permission denied"
+      );
+    }
+
+    return true;
   }
 }

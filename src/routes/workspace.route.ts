@@ -16,5 +16,6 @@ workspaceRoutes.post(
   exceptionEscalator(workspaceController.create)
 );
 workspaceRoutes.get("/", exceptionEscalator(workspaceController.list));
+workspaceRoutes.get("/:workspaceId", exceptionEscalator(workspaceController.get));
 workspaceRoutes.patch("/:workspaceId", exceptionEscalator(workspaceController.update));
-workspaceRoutes.delete(":/workspaceId", exceptionEscalator(workspaceController.delete))
+workspaceRoutes.delete("/:workspaceId", exceptionEscalator(workspaceController.delete))

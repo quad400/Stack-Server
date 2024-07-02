@@ -1,5 +1,9 @@
 import { ICreateBoard } from "../interfaces/workspace.interface";
 import { Board, Workspace } from "../models/workspace.model";
+import {
+  DatabaseException,
+  ExceptionCodes,
+} from "../utils/exceptions/database.exception";
 import { DaoHelper } from "../utils/helpers/dao.helper";
 import { Permission } from "../utils/helpers/permissions.helper";
 
@@ -8,7 +12,7 @@ export class BoardDao {
   private permission = new Permission();
 
   async create(body: ICreateBoard, userId: string, workspaceId: any) {
-    await this.permission.isOwnerPermission(Workspace, workspaceId, userId);
+    await this.permission.hasPermission(workspaceId, userId);
     const board = await Board.create({ workspaceId: workspaceId, ...body });
 
     const workspace = await this.dao.getById(Workspace, workspaceId);
@@ -19,8 +23,10 @@ export class BoardDao {
   }
 
   async get(boardId: string) {
-    const board = await this.dao.getById(Board, boardId);
-
+    const board = await Board.findById(boardId).populate("lists");
+    if (!board) {
+      throw new DatabaseException(ExceptionCodes.NOT_FOUND, `Board not found`);
+    }
     return board;
   }
 
@@ -41,7 +47,8 @@ export class BoardDao {
     body: Record<string, any>,
     userId: string
   ) {
-    await this.permission.isOwnerPermission(Workspace, workspaceId, userId);
+    console.log(workspaceId)
+    await this.permission.hasPermission(workspaceId, userId);
 
     const board = await this.dao.update(Board, boardId, body);
 
@@ -49,7 +56,7 @@ export class BoardDao {
   }
 
   async delete(boardId: string, workspaceId: any, userId: string) {
-    await this.permission.isOwnerPermission(Workspace, workspaceId, userId);
+    await this.permission.hasPermission(workspaceId, userId);
 
     await this.dao.update(Workspace, workspaceId, {
       $pull: { boards: boardId },

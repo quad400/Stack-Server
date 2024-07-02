@@ -1,3 +1,4 @@
+import { IMember } from "./member.interface";
 import { IUser } from "./user.interface";
 
 export interface IWorkspace {
@@ -6,6 +7,8 @@ export interface IWorkspace {
   name: string;
   image: string;
   boards: IBoard[];
+  inviteCode: string;
+  members: IMember[];
   createdAt: Date;
   updatedAt: Date;
 }

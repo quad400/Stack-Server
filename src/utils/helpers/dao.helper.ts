@@ -52,7 +52,7 @@ export class DaoHelper {
   }) {
     const { model, query, optionalQuery } = options;
 
-    const paginated = options?.paginated || true;
+    const paginated = options?.paginated || false;
 
     let _model;
     if (paginated) {

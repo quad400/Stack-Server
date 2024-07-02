@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ListDao } from "../dao/list.dao";
+import { CardDao } from "../dao/card.dao";
 import { ICreateBoard } from "../interfaces/workspace.interface";
 import { ResponseHelper } from "../utils/helpers/response.helper";
 import {
@@ -7,15 +7,15 @@ import {
   HTTP_STATUS_OK,
 } from "../constants/status.constants";
 
-export class ListController {
-  private listDao = new ListDao();
+export class CardController {
+  private cardDao = new CardDao();
 
   create = async (req: Request, res: Response) => {
     const body = req.body as ICreateBoard;
     const userId = req.user._id;
-    const { workspaceId, boardId } = req.query;
+    const { workspaceId, listId } = req.query;
 
-    const list = await this.listDao.create(body, userId, boardId, workspaceId);
+    const list = await this.cardDao.create(body, userId, listId, workspaceId);
 
     ResponseHelper.successResponse({
       res,
@@ -25,49 +25,50 @@ export class ListController {
   };
 
   list = async (req: Request, res: Response) => {
-    const { boardId } = req.query;
+    const query = req.query;
+    const { listId } = req.query;
 
-    const lists = await this.listDao.list(boardId);
+    const cards = await this.cardDao.list(listId, query);
     ResponseHelper.successResponse({
       res,
       statusCode: HTTP_STATUS_OK,
-      data: lists,
+      data: cards,
     });
   };
 
   get = async (req: Request, res: Response) => {
-    const { listId } = req.params;
+    const { cardId } = req.params;
 
-    const list = await this.listDao.get(listId);
+    const card = await this.cardDao.get(cardId);
     ResponseHelper.successResponse({
       res,
       statusCode: HTTP_STATUS_OK,
-      data: list,
+      data: card,
     });
   };
 
   update = async (req: Request, res: Response) => {
     const body = req.body;
     const { _id: userId } = req.user;
-    const { listId } = req.params;
+    const { cardId } = req.params;
 
-    const { workspaceId, boardId } = req.query;
-    const list = await this.listDao.update(listId, workspaceId, body, userId);
+    const { workspaceId } = req.query;
+    const card = await this.cardDao.update(cardId, workspaceId, body, userId);
 
     ResponseHelper.successResponse({
       res,
       message: "Successfully updated board",
       statusCode: HTTP_STATUS_OK,
-      data: list,
+      data: card,
     });
   };
 
   delete = async (req: Request, res: Response) => {
-    const { workspaceId, boardId } = req.query;
+    const { workspaceId, listId } = req.query;
     const { _id: userId } = req.user;
-    const { listId } = req.params;
+    const { cardId } = req.params;
 
-    await this.listDao.delete(boardId, listId, workspaceId, userId);
+    await this.cardDao.delete(cardId, listId, workspaceId, userId);
 
     ResponseHelper.successResponse({
       res,

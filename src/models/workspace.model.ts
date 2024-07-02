@@ -5,6 +5,8 @@ import {
   IList,
   IWorkspace,
 } from "../interfaces/workspace.interface";
+import { NextFunction } from "express";
+import { Member } from "./member.model";
 
 const workspaceSchema = new Schema<IWorkspace>(
   {
@@ -25,6 +27,15 @@ const workspaceSchema = new Schema<IWorkspace>(
       type: Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    inviteCode: {
+      type: String,
+      default: null,
+    },
+    members: {
+      type: [Types.ObjectId],
+      ref: "Member",
+      default: [],
     },
   },
   {
@@ -66,7 +77,7 @@ const listSchema = new Schema<IList>(
     },
     cards: {
       type: [Types.ObjectId],
-      ref: "Cards",
+      ref: "Card",
       default: [],
     },
     boardId: {
@@ -107,3 +118,17 @@ export const Workspace = model<IWorkspace>("Workspace", workspaceSchema);
 export const Board = model<IBoard>("Board", boardSchema);
 export const List = model<IList>("List", listSchema);
 export const Card = model<ICard>("Card", cardSchema);
+
+// workspaceSchema.pre(
+//   "deleteOne",
+//   { document: true, query: false },
+//   async function (next: NextFunction) {
+//     try {
+//       await Member.deleteMany({ workspaceId: this._id });
+
+//       next();
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
