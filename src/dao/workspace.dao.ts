@@ -39,7 +39,7 @@ export class WorkspaceDao {
   }
 
   async get(workspaceId: string) {
-    const workspace = await this.daoHelper.getById(Workspace, workspaceId);
+    const workspace = (await this.daoHelper.getById(Workspace, workspaceId)).populate("boards");
 
     return workspace;
   }
@@ -55,7 +55,7 @@ export class WorkspaceDao {
   async update(body: IWorkspace, workspaceId: string, userId: string) {
     await this.permissions.hasPermission(workspaceId, userId);
 
-    const workspace = await this.daoHelper.update(Workspace, workspaceId, body);
+    const workspace = (await this.daoHelper.update(Workspace, workspaceId, body)).populate("boards");
 
     return workspace;
   }

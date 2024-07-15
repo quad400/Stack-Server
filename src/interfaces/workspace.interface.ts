@@ -6,6 +6,7 @@ export interface IWorkspace {
   createdBy: IUser;
   name: string;
   image: string;
+  description: string;
   boards: IBoard[];
   inviteCode: string;
   members: IMember[];

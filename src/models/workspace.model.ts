@@ -18,6 +18,9 @@ const workspaceSchema = new Schema<IWorkspace>(
       type: String,
       required: true,
     },
+    description: {
+      type: String
+    },
     boards: {
       type: [Types.ObjectId],
       ref: "Board",

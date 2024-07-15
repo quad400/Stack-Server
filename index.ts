@@ -20,6 +20,7 @@ import {
 
 connectDB(MONGO_URI);
 
+console.log(CLOUDINARY_NAME, CLOUDINARY_SECRETKEY)
 cloudinary.config({
   cloud_name: CLOUDINARY_NAME,
   api_key: CLOUDINARY_APIKEY,
