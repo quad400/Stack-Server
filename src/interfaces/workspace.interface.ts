@@ -6,6 +6,7 @@ export interface IWorkspace {
   createdBy: IUser;
   name: string;
   image: string;
+  isPrivate: boolean;
   description: string;
   boards: IBoard[];
   inviteCode: string;
@@ -32,6 +33,30 @@ export interface IList {
   cards: ICard[];
 }
 
+
+export enum ACTION {
+  CREATE = "CREATE",
+  UPDATE = "UPDATE",
+  DELETE = "DELETE"
+}
+
+export enum ENTITY_TYPE {
+  LIST = "LIST",
+  BOARD = "BOARD",
+  CARD = "CARD"
+}
+
+export interface IActivityLog {
+  _id: string;
+  entityType: ENTITY_TYPE;
+  entityTitle: string;
+  workspaceId: IWorkspace;
+  action: ACTION
+  user: IUser;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ICard {
   _id: string;
   name: string;
@@ -43,3 +68,6 @@ export interface ICard {
 export type ICreateWorkspace = Pick<IWorkspace, "name" | "image">;
 export type ICreateBoard = Pick<IBoard, "name" | "image">;
 export type ICreateList = Pick<IList, "name">;
+export type IActivityLogBody = Pick<IActivityLog, "entityType" | "action" | "workspaceId" | "entityTitle">;
+
+export type QueryParams = string | string[] | undefined

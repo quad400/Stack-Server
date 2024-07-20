@@ -35,6 +35,10 @@ const workspaceSchema = new Schema<IWorkspace>(
       type: String,
       default: null,
     },
+    isPrivate: {
+      type: Boolean,
+      default: true
+    },
     members: {
       type: [Types.ObjectId],
       ref: "Member",
@@ -107,6 +111,9 @@ const cardSchema = new Schema<ICard>(
       type: Types.ObjectId,
       ref: "List",
       required: true,
+    },
+    description: {
+      type: String,
     },
     order: {
       type: Number,

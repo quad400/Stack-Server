@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { ICreateUser, IGetUserBy, ILogin, IResetPass } from "../interfaces/user.interface";
+import {
+  ICreateUser,
+  IGetUserBy,
+  ILogin,
+  IResetPass,
+} from "../interfaces/user.interface";
 import { ResponseHelper } from "../utils/helpers/response.helper";
 import { UserService } from "../services/user.service";
 import {
@@ -11,7 +16,7 @@ import { UserDao } from "../dao/user.dao";
 
 export class UserController {
   private readonly userService = new UserService();
-  private readonly userDao = new UserDao()
+  private readonly userDao = new UserDao();
 
   /**
    * `POST` /api/user/login
@@ -77,43 +82,52 @@ export class UserController {
       statusCode: HTTP_STATUS_OK,
     });
   };
-  
-  forgotPassword = async (req: Request, res: Response)=> {
+
+  forgotPassword = async (req: Request, res: Response) => {
     const body = req.body as IGetUserBy;
-  
-   const tokens = await this.userService.forgotPassword(body);
-  
+
+    const tokens = await this.userService.forgotPassword(body);
+
     ResponseHelper.successResponse({
       res,
       message: "Reset Password email sent successfully",
       data: tokens,
       statusCode: HTTP_STATUS_OK,
     });
-  }
-  
-  resetPassword = async (req: Request, res: Response)=> {
-    const {_id} = req.user
+  };
 
-    const body= req.body as IResetPass
-    
-    await this.userService.resetPassword(body, _id)
-      ResponseHelper.successResponse({
-        res,
-        message: "Successfully reset user password",
-        statusCode: HTTP_STATUS_OK,
-      });
-      }
-      
-      me = async (req: Request, res: Response)=> {
-        const {_id} = req.user
-        
-        
-        ResponseHelper.successResponse({
-          res,
-          message: "Successfully reset user password",
-          data: await this.userDao.get({_id: _id}),
-          statusCode: HTTP_STATUS_OK,
-        });
-    
-  }
+  resetPassword = async (req: Request, res: Response) => {
+    const { _id } = req.user;
+
+    const body = req.body as IResetPass;
+
+    await this.userService.resetPassword(body, _id);
+    ResponseHelper.successResponse({
+      res,
+      message: "Successfully reset user password",
+      statusCode: HTTP_STATUS_OK,
+    });
+  };
+
+  me = async (req: Request, res: Response) => {
+    const { _id } = req.user;
+
+    ResponseHelper.successResponse({
+      res,
+      message: "Successfully get user",
+      data: await this.userDao.get({ _id: _id }),
+      statusCode: HTTP_STATUS_OK,
+    });
+  };
+
+  getById = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+
+    ResponseHelper.successResponse({
+      res,
+      message: "Successfully get user",
+      data: await this.userDao.get({ _id: userId }),
+      statusCode: HTTP_STATUS_OK,
+    });
+  };
 }

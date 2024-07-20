@@ -4,14 +4,14 @@ import {
   DatabaseException,
   ExceptionCodes,
 } from "../exceptions/database.exception";
-import { IWorkspace } from "../../interfaces/workspace.interface";
+import { IWorkspace, QueryParams } from "../../interfaces/workspace.interface";
 import { Member } from "../../models/member.model";
 import { IMember } from "../../interfaces/member.interface";
 
 export class Permission {
   private daoHelper = new DaoHelper();
 
-  async hasPermission<T>(modelId: string, ownerId: string) {
+  async hasPermission<T>(modelId: QueryParams, ownerId: string) {
     const member = (await Member.findOne({
       workspaceId: modelId,
       user: ownerId,

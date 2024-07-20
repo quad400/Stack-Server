@@ -15,6 +15,7 @@ cardRoutes.post(
   validator({ dto: new CreateListDto() }),
   exceptionEscalator(cardController.create)
 );
+cardRoutes.post("/reorder", exceptionEscalator(cardController.reorder));
 cardRoutes.get("/", exceptionEscalator(cardController.list));
 cardRoutes.get("/:cardId", exceptionEscalator(cardController.get));
 cardRoutes.patch("/:cardId", exceptionEscalator(cardController.update));

@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { CardDao } from "../dao/card.dao";
-import { ICreateBoard } from "../interfaces/workspace.interface";
+import {
+  ACTION,
+  ENTITY_TYPE,
+  ICreateBoard,
+} from "../interfaces/workspace.interface";
 import { ResponseHelper } from "../utils/helpers/response.helper";
 import {
   HTTP_STATUS_CREATED,
@@ -15,12 +19,12 @@ export class CardController {
     const userId = req.user._id;
     const { workspaceId, listId } = req.query;
 
-    const list = await this.cardDao.create(body, userId, listId, workspaceId);
+    const card = await this.cardDao.create(body, userId, listId, workspaceId);
 
     ResponseHelper.successResponse({
       res,
       statusCode: HTTP_STATUS_CREATED,
-      data: list,
+      data: card,
     });
   };
 
@@ -74,6 +78,22 @@ export class CardController {
       res,
       message: "Successfully deleted board",
       statusCode: HTTP_STATUS_OK,
+    });
+  };
+
+  reorder = async (req: Request, res: Response) => {
+    const userId = req.user?._id;
+    const { workspaceId } = req.query;
+
+    const lists = req.body;
+
+    const dao = await this.cardDao.reorder(workspaceId, userId, lists);
+
+    ResponseHelper.successResponse({
+      res: res,
+      message: "Successfully reorder card",
+      statusCode: HTTP_STATUS_OK,
+      data: dao,
     });
   };
 }

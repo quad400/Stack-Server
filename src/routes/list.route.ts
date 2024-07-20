@@ -16,6 +16,7 @@ listRoutes.post(
   exceptionEscalator(listController.create)
 );
 listRoutes.get("/", exceptionEscalator(listController.list));
+listRoutes.post("/reorder", exceptionEscalator(listController.reorder));
 listRoutes.get("/:listId", exceptionEscalator(listController.get));
 listRoutes.patch("/:listId", exceptionEscalator(listController.update));
 listRoutes.delete("/:listId", exceptionEscalator(listController.delete));

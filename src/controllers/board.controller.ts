@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { BoardDao } from "../dao/board.dao";
-import { ICreateBoard } from "../interfaces/workspace.interface";
+import { ACTION, ENTITY_TYPE, ICreateBoard, IWorkspace } from "../interfaces/workspace.interface";
 import { ResponseHelper } from "../utils/helpers/response.helper";
 import {
   HTTP_STATUS_CREATED,
   HTTP_STATUS_OK,
 } from "../constants/status.constants";
+import { ActivityLogDao } from "../dao/activitylog.dao";
 
 export class BoardController {
   private boardDao = new BoardDao();
+  private activityLogDao = new ActivityLogDao();
 
   create = async (req: Request, res: Response) => {
     const body = req.body as ICreateBoard;
@@ -16,6 +18,7 @@ export class BoardController {
     const { workspaceId } = req.query;
 
     const board = await this.boardDao.create(body, userId, workspaceId);
+
 
     ResponseHelper.successResponse({
       res,
@@ -61,6 +64,8 @@ export class BoardController {
       body,
       userId
     );
+
+    
 
     ResponseHelper.successResponse({
       res,

@@ -19,3 +19,4 @@ workspaceRoutes.get("/", exceptionEscalator(workspaceController.list));
 workspaceRoutes.get("/:workspaceId", exceptionEscalator(workspaceController.get));
 workspaceRoutes.patch("/:workspaceId", exceptionEscalator(workspaceController.update));
 workspaceRoutes.delete("/:workspaceId", exceptionEscalator(workspaceController.delete))
+workspaceRoutes.post("/:workspaceId/invite-code", exceptionEscalator(workspaceController.regenerate))

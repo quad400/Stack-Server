@@ -52,6 +52,7 @@ export class WorkspaceController {
     const body = req.body;
     const { workspaceId } = req.params;
 
+    console.log(body)
     const workspace = await this.workspaceDao.update(body, workspaceId, userId);
     ResponseHelper.successResponse({
       res: res,
@@ -65,10 +66,25 @@ export class WorkspaceController {
     const { workspaceId } = req.params;
 
     await this.workspaceDao.delete(userId, workspaceId);
+
     ResponseHelper.successResponse({
       res: res,
       message: "Successfully deleted workspace",
       statusCode: HTTP_STATUS_OK,
     });
   };
+  
+  regenerate = async (req: Request, res: Response)=> {
+    const userId = req.user?._id;
+    const { workspaceId } = req.params;
+  
+    const workspace = await this.workspaceDao.regenerateInviteCode(workspaceId, userId);
+    ResponseHelper.successResponse({
+      res: res,
+      message: "Successfully regenerate invite code",
+      data: workspace,
+      statusCode: HTTP_STATUS_OK,
+    });
+    
+  }
 }

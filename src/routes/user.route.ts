@@ -1,6 +1,11 @@
 import { Router } from "express";
 import { validator } from "../utils/helpers/validators.helper";
-import { EmailDto, LoginDto, RegisterDto, ResetPasswordDto } from "../dto/user.dto";
+import {
+  EmailDto,
+  LoginDto,
+  RegisterDto,
+  ResetPasswordDto,
+} from "../dto/user.dto";
 import { exceptionEscalator } from "../middlewares/exception.middleware";
 import { UserController } from "../controllers/user.controller";
 import { protect } from "../middlewares/auth.middleware";
@@ -34,19 +39,17 @@ userRoutes.post(
 
 userRoutes.post(
   "/forgot-password",
-  validator({dto: new EmailDto()}),
+  validator({ dto: new EmailDto() }),
   exceptionEscalator(userController.forgotPassword)
 );
 
 userRoutes.post(
   "/reset-password",
-  validator({dto: new ResetPasswordDto()}),
+  validator({ dto: new ResetPasswordDto() }),
   protect,
   exceptionEscalator(userController.resetPassword)
 );
 
-userRoutes.get(
-  "/me",
-  protect,
-  exceptionEscalator(userController.me)
-);
+userRoutes.get("/me", protect, exceptionEscalator(userController.me));
+
+userRoutes.get("/:userId", exceptionEscalator(userController.getById));

@@ -1,19 +1,28 @@
+import { MemberDao } from "../dao/member.dao";
 import { IUser } from "../interfaces/user.interface";
 import EmailService from "../utils/helpers/email.helper";
 
+export class MemberService {
+  private emailService = new EmailService();
 
-export class MemberService{
+  private memberDao = new MemberDao();
 
-    private emailService = new EmailService()
+  async sendInvite(
+    body: Record<string, string>,
+    userId: string,
+    workspaceId: string
+  ) {
+    const { fromUser, workspace } = await this.memberDao.sendInvite(
+      body,
+      userId,
+      workspaceId
+    );
 
-    async sendInvitationDao(user: IUser, data: Record<string, string>){
-
-        await this.emailService.sendEmail({
-            to: user.email,
-            subject: `${user?.fullName} invited you to their project on stack`,
-            template: "invitation",
-            context: { name: user.fullName,  },
-          });
-    
-    }
-} 
+    await this.emailService.sendEmail({
+      to: body.email,
+      subject: `${fromUser?.fullName} invited you to their project on stack`,
+      template: "invitation",
+      context: { inviteCode: workspace.inviteCode },
+    });
+  }
+}
