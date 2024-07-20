@@ -113,4 +113,11 @@ export class BoardDao {
 
     await board.deleteOne();
   }
+
+  async search(query: any) {
+    console.log(query);
+    const boards = await Board.find({name: query});
+
+    return boards;
+  }
 }

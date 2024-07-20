@@ -16,6 +16,7 @@ boardRoutes.post(
   exceptionEscalator(boardController.create)
 );
 boardRoutes.get("/", exceptionEscalator(boardController.list));
+boardRoutes.get("/search", exceptionEscalator(boardController.search));
 boardRoutes.get("/:boardId", exceptionEscalator(boardController.get));
 boardRoutes.patch("/:boardId", exceptionEscalator(boardController.update));
 boardRoutes.delete("/:boardId", exceptionEscalator(boardController.delete));

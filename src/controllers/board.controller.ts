@@ -89,4 +89,16 @@ export class BoardController {
       statusCode: HTTP_STATUS_OK,
     });
   };
+
+  search = async (req: Request, res: Response) => {
+   
+    const {q} = req.query
+    const boards = await this.boardDao.search(q);
+    
+    ResponseHelper.successResponse({
+      res,
+      statusCode: HTTP_STATUS_OK,
+      data: boards,
+    });
+  }
 }
