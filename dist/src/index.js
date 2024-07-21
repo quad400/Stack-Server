@@ -9,7 +9,7 @@ const exception_middleware_1 = require("./middlewares/exception.middleware");
 const routes_1 = require("./routes");
 const db_config_1 = __importDefault(require("./config/db.config"));
 const env_1 = require("./constants/env");
-(0, db_config_1.default)(env_1.MONGO_URI);
+(0, db_config_1.default)(env_1.MONGODB_URI);
 cloudinary_1.v2.config({
     cloud_name: env_1.CLOUDINARY_NAME,
     api_key: env_1.CLOUDINARY_APIKEY,

@@ -12,10 +12,10 @@ import {
   CLOUDINARY_APIKEY,
   CLOUDINARY_NAME,
   CLOUDINARY_SECRETKEY,
-  MONGO_URI,
+  MONGODB_URI,
 } from "./constants/env";
 
-connectDB(MONGO_URI);
+connectDB(MONGODB_URI);
 
 cloudinary.config({
   cloud_name: CLOUDINARY_NAME,
