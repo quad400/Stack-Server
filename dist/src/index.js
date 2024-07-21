@@ -15,15 +15,14 @@ cloudinary_1.v2.config({
     api_key: env_1.CLOUDINARY_APIKEY,
     api_secret: env_1.CLOUDINARY_SECRETKEY,
 });
-const port = process.env.PORT || 3000;
 app_1.default.get("/", (req, res) => {
     res.send("Stack is now running live 🚀");
 });
 app_1.default.use("/api", routes_1.rootRouter);
 app_1.default.use(exception_middleware_1.exceptionFilter);
 app_1.default.get("*", (0, exception_middleware_1.error404)());
-const server = app_1.default.listen(port, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${port}`);
+const server = app_1.default.listen(env_1.PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${env_1.PORT}`);
 });
 process.on("uncaughtException", (err) => {
     console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");

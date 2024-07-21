@@ -13,6 +13,7 @@ import {
   CLOUDINARY_NAME,
   CLOUDINARY_SECRETKEY,
   MONGODB_URI,
+  PORT
 } from "./constants/env";
 
 connectDB(MONGODB_URI);
@@ -23,7 +24,6 @@ cloudinary.config({
   api_secret: CLOUDINARY_SECRETKEY,
 });
 
-const port = process.env.PORT || 3000;
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Stack is now running live 🚀");
@@ -34,9 +34,9 @@ app.use("/api", rootRouter);
 app.use(exceptionFilter);
 app.get("*", error404());
 
-const server = app.listen(port, () => {
+const server = app.listen(PORT, () => {
   console.log(
-    `Server running in ${process.env.NODE_ENV!} mode on port ${port}`
+    `Server running in ${process.env.NODE_ENV!} mode on port ${PORT}`
   );
 });
 

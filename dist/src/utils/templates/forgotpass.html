@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        font-family: Arial, sans-serif;
+      }
+      .header {
+        background-color: #f4f4f4;
+        padding: 10px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      a {
+        color: blue;
+        text-decoration: underline;
+      }
+      .content {
+        padding: 20px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .footer {
+        background-color: #f4f4f4;
+        padding: 10px;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      .btn{
+        background-color: blue;
+        padding: 10px 5px;
+        border-radius: 10px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">Forgot your password of Stack</div>
+      <div class="content">
+        <p>Dear {{name}},</p>
+        <p>Did you forget your password for stack, click the link below to reset password!</p>
+        <p>
+          Kindly click this to reset your password
+          <a class="btn" href="http://localhost:3000/account-verify/{{code}}"
+            >Reset Password</a
+          >
+        </p>
+      </div>
+      <div class="footer">&copy; 2024 Our Service</div>
+    </div>
+  </body>
+</html>
