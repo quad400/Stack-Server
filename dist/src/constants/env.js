@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CLOUDINARY_SECRETKEY = exports.CLOUDINARY_APIKEY = exports.CLOUDINARY_NAME = exports.EMAIL_PASS = exports.EMAIL_NAME = exports.JWT_REFRESH_EXPIRY = exports.JWT_REFRESH_KEY = exports.JWT_ACCESS_EXPIRY = exports.JWT_ACCESS_KEY = exports.MONGO_URI = exports.NODE_ENV = exports.PORT = void 0;
+exports.UPLOAD_DIR = exports.CLOUDINARY_SECRETKEY = exports.CLOUDINARY_APIKEY = exports.CLOUDINARY_NAME = exports.EMAIL_PASS = exports.EMAIL_NAME = exports.JWT_REFRESH_EXPIRY = exports.JWT_REFRESH_KEY = exports.JWT_ACCESS_EXPIRY = exports.JWT_ACCESS_KEY = exports.MONGO_URI = exports.NODE_ENV = exports.PORT = void 0;
 exports.PORT = process.env.PORT || 3000;
 exports.NODE_ENV = process.env.NODE_ENV || "development";
 exports.MONGO_URI = process.env.MONGO_URI;
@@ -13,3 +13,4 @@ exports.EMAIL_PASS = process.env.EMAIL_PASS;
 exports.CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
 exports.CLOUDINARY_APIKEY = process.env.CLOUDINARY_APIKEY;
 exports.CLOUDINARY_SECRETKEY = process.env.CLOUDINARY_SECRETKEY;
+exports.UPLOAD_DIR = process.env.UPLOAD_DIR;
