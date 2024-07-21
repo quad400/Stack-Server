@@ -13,4 +13,4 @@ exports.EMAIL_PASS = process.env.EMAIL_PASS;
 exports.CLOUDINARY_NAME = process.env.CLOUDINARY_NAME;
 exports.CLOUDINARY_APIKEY = process.env.CLOUDINARY_APIKEY;
 exports.CLOUDINARY_SECRETKEY = process.env.CLOUDINARY_SECRETKEY;
-exports.UPLOAD_DIR = process.env.UPLOAD_DIR;
+exports.UPLOAD_DIR = process.env.UPLOAD_DIR || "/tmp/uploads";
