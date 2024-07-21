@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.activityLogRoutes = void 0;
+const express_1 = require("express");
+const activitylog_controller_1 = require("../controllers/activitylog.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+exports.activityLogRoutes = (0, express_1.Router)();
+const activityLogController = new activitylog_controller_1.ActivityLogController();
+exports.activityLogRoutes.use(auth_middleware_1.protect);
+exports.activityLogRoutes.post("/", activityLogController.create);
+exports.activityLogRoutes.get("/", activityLogController.list);

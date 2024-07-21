@@ -1,12 +1,9 @@
-import http from "http";
 import { Request, Response } from "express";
 import { v2 as cloudinary } from "cloudinary";
 
 import app from "./app";
 import {
   error404,
-  errorHandler,
-  exceptionEscalator,
   exceptionFilter,
 } from "./src/middlewares/exception.middleware";
 import { rootRouter } from "./src/routes";
@@ -27,7 +24,6 @@ cloudinary.config({
 });
 
 const port = process.env.PORT || 3000;
-const server = http.createServer(app);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Stack is now running live 🚀");
@@ -38,7 +34,7 @@ app.use("/api", rootRouter);
 app.use(exceptionFilter);
 app.get("*", error404());
 
-server.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(
     `Server running in ${process.env.NODE_ENV!} mode on port ${port}`
   );
