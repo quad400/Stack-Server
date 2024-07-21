@@ -11,6 +11,7 @@
   },
   "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "@clerk/clerk-sdk-node": "^5.0.10",
     "bcrypt": "^5.1.1",
