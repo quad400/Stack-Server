@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.workspaceRoutes = void 0;
+const express_1 = require("express");
+const validators_helper_1 = require("../utils/helpers/validators.helper");
+const workspace_controller_1 = require("../controllers/workspace.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const workspace_dto_1 = require("../dto/workspace.dto");
+const exception_middleware_1 = require("../middlewares/exception.middleware");
+exports.workspaceRoutes = (0, express_1.Router)();
+const workspaceController = new workspace_controller_1.WorkspaceController();
+exports.workspaceRoutes.use(auth_middleware_1.protect);
+exports.workspaceRoutes.post("/", (0, validators_helper_1.validator)({ dto: new workspace_dto_1.CreateModelDto() }), (0, exception_middleware_1.exceptionEscalator)(workspaceController.create));
+exports.workspaceRoutes.get("/", (0, exception_middleware_1.exceptionEscalator)(workspaceController.list));
+exports.workspaceRoutes.get("/:workspaceId", (0, exception_middleware_1.exceptionEscalator)(workspaceController.get));
+exports.workspaceRoutes.patch("/:workspaceId", (0, exception_middleware_1.exceptionEscalator)(workspaceController.update));
+exports.workspaceRoutes.delete("/:workspaceId", (0, exception_middleware_1.exceptionEscalator)(workspaceController.delete));
+exports.workspaceRoutes.post("/:workspaceId/invite-code", (0, exception_middleware_1.exceptionEscalator)(workspaceController.regenerate));
