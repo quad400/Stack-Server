@@ -21,6 +21,17 @@
         color: blue;
         text-decoration: underline;
       }
+
+      .invitation-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
       .content {
         padding: 20px;
         font-size: 16px;
@@ -42,8 +53,10 @@
         <p>Thank you for registering. We are glad to have you!</p>
         <p>
           Kindly click this to verify your account
-          <a href="http://localhost:5173/verify/{{code}}"
-            >http://localhost:5173/verify/{{code}}</a
+          <a
+            href="https://stack-client-ep1t.onrender.com/{{code}}"
+            class="invitation-link"
+            >Verify</a
           >
         </p>
       </div>
