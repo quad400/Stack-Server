@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { BoardDao } from "../dao/board.dao";
-import { ACTION, ENTITY_TYPE, ICreateBoard, IWorkspace } from "../interfaces/workspace.interface";
+import { ICreateBoard } from "../interfaces/workspace.interface";
 import { ResponseHelper } from "../utils/helpers/response.helper";
 import {
   HTTP_STATUS_CREATED,
@@ -42,7 +42,6 @@ export class BoardController {
   get = async (req: Request, res: Response) => {
     const { boardId } = req.params;
 
-    const body = req.body;
     const board = await this.boardDao.get(boardId);
     ResponseHelper.successResponse({
       res,

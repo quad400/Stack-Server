@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { ListDao } from "../dao/list.dao";
 import {
-  ACTION,
-  ENTITY_TYPE,
   ICreateBoard,
 } from "../interfaces/workspace.interface";
 import { ResponseHelper } from "../utils/helpers/response.helper";
@@ -15,7 +13,6 @@ import { ActivityLogDao } from "../dao/activitylog.dao";
 export class ListController {
   private listDao = new ListDao();
 
-  private activityLogDao = new ActivityLogDao();
 
   create = async (req: Request, res: Response) => {
     const body = req.body as ICreateBoard;
@@ -59,10 +56,9 @@ export class ListController {
     const { _id: userId } = req.user;
     const { listId } = req.params;
 
-    const { workspaceId, boardId } = req.query;
+    const { workspaceId } = req.query;
     const list = await this.listDao.update(listId, workspaceId, body, userId);
 
-    
     ResponseHelper.successResponse({
       res,
       message: "Successfully updated board",

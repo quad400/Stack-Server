@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { CardDao } from "../dao/card.dao";
 import {
-  ACTION,
-  ENTITY_TYPE,
   ICreateBoard,
 } from "../interfaces/workspace.interface";
 import { ResponseHelper } from "../utils/helpers/response.helper";
