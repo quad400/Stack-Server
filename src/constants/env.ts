@@ -10,3 +10,4 @@ export const EMAIL_PASS = process.env.EMAIL_PASS as string;
 export const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME as string;
 export const CLOUDINARY_APIKEY = process.env.CLOUDINARY_APIKEY as string;
 export const CLOUDINARY_SECRETKEY = process.env.CLOUDINARY_SECRETKEY as string;
+export const UPLOAD_DIR = process.env.UPLOAD_DIR as string;
